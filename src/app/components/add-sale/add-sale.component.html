@@ -1,0 +1,172 @@
+<div class="row no-gutters" id="add-sale">
+  <div class="col-12">
+
+    <div class="row">
+      <div class="col-12">
+        <button type="button" class="btn btn-primary" [routerLink]="['/index-content']">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Atras
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h2>Venta n°{{numSales}}</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <hr>
+        <h5>Ofertas</h5>
+          <p-dropdown #dd [options]="offersDropdown" [(ngModel)]="offerSelected" 
+          (onChange)="addArticleOffer(dd)" filter="true">
+              <ng-template let-item pTemplate="selectedItem">
+                  <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+              </ng-template>
+              <ng-template let-car pTemplate="item">
+                  <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                      <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                  </div>
+              </ng-template>
+          </p-dropdown>
+          <hr>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+
+        <form [formGroup]="formSale" (ngSubmit)="finishSale()">
+
+          <div class="row form-group">
+            <div class="col-12 mt-2">
+              <label for="article">Artículo</label>
+              <input type="text" formControlName="article" id="article" class="form-control"
+              [ngClass]="{'is-valid': article.dirty && !article.invalid, 'is-invalid': article.dirty && article.invalid}">
+
+              <div class="valid-feedback">
+                <span>!Correcto!</span>
+              </div>
+    
+              <div class="invalid-feedback">
+                <span *ngIf="article.errors?.required">Valor requerido</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-12 mt-2">
+              <label for="quantity">Cantidad</label>
+              <input type="text" inputmode="numeric" pKeyFilter="pint" formControlName="quantity" (keyup)="totalSum()" id="quantity" class="form-control"
+              [ngClass]="{'is-valid': quantity.dirty && !quantity.invalid, 'is-invalid': quantity.dirty && quantity.invalid}">
+
+              <div class="valid-feedback">
+                <span>!Correcto!</span>
+              </div>
+    
+              <div class="invalid-feedback">
+                <span *ngIf="quantity.errors?.required">Valor requerido</span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-12 mt-2">
+              <label for="price">Precio</label>
+              <input type="text" inputmode="numeric"  pKeyFilter="pint" formControlName="price" (keyup)="totalSum()" id="price" class="form-control"
+              [ngClass]="{'is-valid': price.dirty && !price.invalid, 'is-invalid': price.dirty && price.invalid}">
+
+              <div class="valid-feedback">
+                <span>!Correcto!</span>
+              </div>
+    
+              <div class="invalid-feedback">
+                <span *ngIf="price.errors?.required">Valor requerido</span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-6 mt-2">
+              <label for="totalPrice">Total Cantidad</label>
+              <input class="form-control" pKeyFilter="pint" type="text" formControlName="totalPrice">
+            </div>
+          </div>
+
+          <div class="row form-group">
+              <div class="col-12">
+                <button [disabled]="formSale.invalid" (click)="addArticle()" class="btn btn-block btn-primary">
+                  Agregar articulo
+                </button>
+              </div>
+          </div>
+
+          <div class="row form-group" *ngIf="listArticles.length > 0">
+            <div class="col-12">
+
+              <div class="row" >
+                <div class="col-12 mb-4 text-center">
+
+                  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <!-- Article Column -->
+                    <ng-container matColumnDef="article">
+                      <mat-header-cell *matHeaderCellDef> Articulo </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.article}} </mat-cell>
+                      <mat-footer-cell *matFooterCellDef><b>Total</b></mat-footer-cell>
+                    </ng-container>
+                  
+                    <!-- Quantity Column -->
+                    <ng-container matColumnDef="quantity">
+                      <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.quantity}} </mat-cell>
+                      <mat-footer-cell *matFooterCellDef>$ {{sumTotal()}}</mat-footer-cell>
+                    </ng-container>
+                  
+                    <!-- Price Column -->
+                    <ng-container matColumnDef="price">
+                      <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
+                      <mat-cell *matCellDef="let element">$ {{element.price}} </mat-cell>
+                    </ng-container>
+                  
+                    <!-- totalPrice Column -->
+                    <ng-container matColumnDef="totalPrice">
+                      <mat-header-cell *matHeaderCellDef> Total Cantidad </mat-header-cell>
+                      <mat-cell *matCellDef="let element">$ {{element.totalPrice}} </mat-cell>
+                    </ng-container>
+                  
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    <mat-footer-row *matFooterRowDef="tableFooterColumns"></mat-footer-row>
+                  </mat-table>
+
+                </div>
+              </div>
+
+              <div class="row d-none">
+                <div class="col-3 mb-3">
+                  <input class="form-control" pKeyFilter="pint" type="text" formControlName="totalSale"> 
+                </div>
+              </div>
+              
+              <button type="submit" class="btn btn-block btn-primary">
+                Terminar venta
+              </button>
+
+            </div>
+          </div>
+
+          <div class="row" *ngIf="listArticles.length === 0">
+            <div class="col-12">
+              <p>No hay articulos agregados en esta venta</p>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<div class="row no-gutters" id="edit-offer">
+  <div class="col-12">
+
+    <div class="row">
+      <div class="col-12">
+        <button type="button" class="btn btn-primary" [routerLink]="['/list-offers']">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Atras
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h2>Editar oferta</h2>
+      </div>
+    </div>
+
+    <form [formGroup]="formOffer" (ngSubmit)="editOffer()">
+
+      <div class="row form-group">
+        <div class="col-12 mt-2">
+          <label for="article">Artículo</label>
+          <input type="text" formControlName="article" id="article" class="form-control"
+          [ngClass]="{'is-valid': article.dirty && !article.invalid, 'is-invalid': article.dirty && article.invalid}">
+
+          <div class="valid-feedback">
+            <span>!Correcto!</span>
+          </div>
+
+          <div class="invalid-feedback">
+            <span *ngIf="article.errors?.required">Valor requerido</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-12 mt-2">
+          <label for="quantity">Cantidad</label>
+          <input type="text" inputmode="numeric" pKeyFilter="pint" formControlName="quantity" (keyup)="stringFormatFactory()" id="quantity" class="form-control"
+          [ngClass]="{'is-valid': quantity.dirty && !quantity.invalid, 'is-invalid': quantity.dirty && quantity.invalid}">
+
+          <div class="valid-feedback">
+            <span>!Correcto!</span>
+          </div>
+
+          <div class="invalid-feedback">
+            <span *ngIf="quantity.errors?.required">Valor requerido</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-12 mt-2">
+          <label for="totalPrice">Precio Final</label>
+          <input class="form-control" inputmode="numeric" pKeyFilter="pint" type="text" (keyup)="stringFormatFactory()" formControlName="totalPrice"
+          [ngClass]="{'is-valid': totalPrice.dirty && !totalPrice.invalid, 'is-invalid': totalPrice.dirty && totalPrice.invalid}">
+
+          <div class="valid-feedback">
+            <span>!Correcto!</span>
+          </div>
+
+          <div class="invalid-feedback">
+            <span *ngIf="totalPrice.errors?.required">Valor requerido</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-6 mt-2">
+          <label for="price">Precio Unidad Aprox.</label>
+          <input type="text" inputmode="numeric" pKeyFilter="pint" formControlName="price" id="price" class="form-control">
+
+        </div>
+      </div>
+
+      <div class="row form-group">
+          <div class="col-12">
+            <button [disabled]="formOffer.invalid" type="submit" class="btn btn-block btn-primary">
+              Editar oferta
+            </button>
+          </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+

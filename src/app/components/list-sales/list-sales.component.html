@@ -1,0 +1,39 @@
+<div class="row no-gutters" id="list-sales" *ngIf="loadPage">
+  <div class="col-12">
+
+    <div class="row">
+      <div class="col-12">
+        <button type="button" class="btn btn-primary" [routerLink]="['/index-content']">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Atras
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 ml-1">
+        <h2>Lista de días</h2>
+      </div>
+    </div>
+
+    <div class="row" *ngFor="let sale of sales">
+      <div class="col-12 mt-2 mb-2">
+
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">{{sale.day | date: 'medium'}}</h4>
+            <p class="card-text" *ngIf="sale.items_sold">Ventas realizadas: {{sale.items_sold.length}}</p>
+            <p class="card-text" *ngIf="!sale.items_sold">Ventas realizadas: No hay datos</p>
+            <button type="button" [routerLink]="['/details-sale']" (click)="ViewDetails(sale)" class="btn btn-primary">Ver detalles</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="h-100" *ngIf="!loadPage">
+  <div class="spinner">
+    <img src="assets/img/spinner.gif" alt="">
+  </div>
+</div>

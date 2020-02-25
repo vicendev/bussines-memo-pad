@@ -1,0 +1,72 @@
+<div class="row no-gutters" id="list-offers" *ngIf="loadPage">
+  <div class="col-12">
+
+    <div class="row">
+      <div class="col-12">
+        <button type="button" class="btn btn-primary" [routerLink]="['/index-content']">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Atras
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h2>Lista de ofertas</h2>
+      </div>
+    </div>
+
+    <div class="row no-gutters">
+      <div class="col-12 mb-2 mt-2">
+        <button type="button" class="btn btn-primary" [routerLink]="['/add-offer']">
+          <i class="fa fa-plus" aria-hidden="true"></i> Agregar oferta
+        </button>
+      </div>
+    </div>
+
+    <div class="row" *ngFor="let offer of listOffer">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">{{offer.name}}</h4>
+            <button type="button" (click)="editOffer(offer)" [routerLink]="['/edit-offer']" routerLinkActive="router-link-active"  class="btn btn-primary">Editar</button>
+            <i class="fa fa-exchange" aria-hidden="true"></i>
+            <button type="button" (click)="openDeleteModal(offer)" class="btn btn-danger">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #modal_delete_offer let-modal>
+    
+    
+  <div class="modal-header">
+    <h5 class="modal-title">¿Eliminar esta oferta?</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12">
+        <p>{{offerObj.name}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <button type="button" (click)="deletePosts()" class="btn btn-primary">Si</button>
+        <i class="fa fa-exchange" aria-hidden="true"></i>
+        <button type="button" (click)="modal.dismiss()" class="btn btn-danger">No</button>
+      </div>
+    </div>
+  </div>
+
+</ng-template>
+
+<div class="h-100" *ngIf="!loadPage">
+  <div class="spinner">
+    <img src="assets/img/spinner.gif" alt="">
+  </div>
+</div>

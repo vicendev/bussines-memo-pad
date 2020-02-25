@@ -1,0 +1,103 @@
+<div class="row no-gutters" id="index-content" *ngIf="openDay === 1">
+  <div class="col-12">
+    <hr>
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2>Nueva Venta</h2>
+        <button type="button" [routerLink]="['/add-sale']"
+         class="btn-index btn btn-primary">
+         <i class="fa fa-usd" aria-hidden="true">  </i> 
+          Iniciar Nueva Venta
+        </button>
+      </div>
+    </div>
+    <hr>
+
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2>Lista de Días</h2>
+        <button type="button" class="btn-index btn btn-primary" [routerLink]="['/list-sales']" ><i class="fa fa-pencil" aria-hidden="true">  </i>
+          Editar/Eliminar
+        </button>
+      </div>
+    </div>
+    <hr>
+
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2>Editor de ofertas</h2>
+        <button type="button" class="btn-index btn btn-primary" [routerLink]="['/list-offers']" ><i class="fa fa-pencil" aria-hidden="true">  </i>
+          Crear/Eliminar/Editar
+        </button>
+      </div>
+    </div>
+    <hr>
+
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2>Terminar Jornada</h2>
+        <button type="button" class="btn-index btn btn-primary"><i class="fa fa-flag-checkered" aria-hidden="true">  </i>
+          Terminar Día
+        </button>
+      </div>
+    </div>
+    <hr>
+
+    <div class="row">
+      <div class="col-6">
+        <h2>Ultimas ventas</h2>
+      </div>
+
+      <div class="col-6">
+        <h2>Total del día</h2>
+        <h4>$ {{totalMoneyDay}}</h4>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row no-gutters" id="index-content" *ngIf="!openDay === 1">
+  <div class="col-12">
+    <hr>
+    <div class="row">
+      <div class="col-12 text-center">
+        <button type="button" (click)="createDay()"
+          class="btn-index btn btn-primary">
+          <i class="fa fa-usd" aria-hidden="true">  </i> 
+          Iniciar Nuevo Día
+        </button>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="openDay === -1">
+      <div class="col-12 mt-2 mb-2 text-center">
+        <h4>No hay datos de su negocio, inicie un nuevo día para comenzar.</h4>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="openDay === 0">
+      <div class="col-12 mt-2 mb-2 text-center">
+        <h4>Inicie un nuevo día para comenzar.</h4>
+      </div>
+
+      <div class="row">
+        <div class="col-12 text-center">
+          <h2>Lista de Días</h2>
+          <button type="button" class="btn-index btn btn-primary" [routerLink]="['/list-sales']" ><i class="fa fa-eye" aria-hidden="true">  </i>
+            Ver lista
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<div class="h-100" *ngIf="!openDay">
+  <div class="spinner">
+    <img src="assets/img/spinner.gif" alt="">
+  </div>
+</div>
